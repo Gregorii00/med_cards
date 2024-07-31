@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS migrations.patient (
     hireDate VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
-Go
+--Go
 
 --CREATE FUNCTION save()
 --AS $$

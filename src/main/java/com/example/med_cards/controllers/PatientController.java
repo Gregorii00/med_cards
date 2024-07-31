@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+@RestController
 @RequestMapping("/patient")
 public class PatientController {
     @Autowired
@@ -65,6 +66,7 @@ public class PatientController {
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
 
         patient.setHireDate(String.valueOf(LocalDate.now()));
+
 
         patientService.save(patient);
 

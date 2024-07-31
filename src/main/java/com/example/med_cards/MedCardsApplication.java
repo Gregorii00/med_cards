@@ -8,5 +8,4 @@ public class MedCardsApplication {
 	public static void main(String[] args){
 		SpringApplication.run(MedCardsApplication.class, args);
 	}
-
 }
