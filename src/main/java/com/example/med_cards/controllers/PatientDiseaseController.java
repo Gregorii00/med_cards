@@ -40,9 +40,6 @@ public class PatientDiseaseController {
         Map < String, Object > respPatientDisease = new LinkedHashMap < String, Object > ();
         List < PatientDisease > patientDiseaseList = patientDiseaseService.findAll();
         if (!patientDiseaseList.isEmpty()) {
-            for (int i = 0; i<patientDiseaseList.size();i++){
-                patientDiseaseList.get(i).setDisease_message(diseaseService.findById(patientDiseaseList.get(i).getDisease()).getName());
-            }
             respPatientDisease.put("status", 1);
             respPatientDisease.put("data", patientDiseaseList);
             return new ResponseEntity < > (respPatientDisease, HttpStatus.OK);

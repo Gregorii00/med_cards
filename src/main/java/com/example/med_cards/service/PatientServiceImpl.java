@@ -1,7 +1,6 @@
 package com.example.med_cards.service;
 
 import com.example.med_cards.model.Patient;
-import com.example.med_cards.repo.PatientDiseaseRepo;
 import com.example.med_cards.repo.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +10,11 @@ import java.util.List;
 @Service
 public class PatientServiceImpl implements PatientService{
     @Autowired
-
     private PatientRepo patientRepo;
-    private PatientDiseaseRepo patientDiseaseRepo;
+    @Autowired
+    private DiseaseService diseaseService;
 
     @Override
-
     public void saveAll(List< Patient > patientList) {
 
         patientRepo.saveAll(patientList);
@@ -30,16 +28,24 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public List < Patient > findPatientList() {
-        return patientRepo.findAll();
+        List <Patient> patientList = patientRepo.findAll();
+        for (int i = 0; i < patientList.size(); i++) {
+            for (int j = 0; j < patientList.get(i).getPatientDiseaseList().size(); j++) {
+                patientList.get(i).getPatientDiseaseList().get(j).setDisease_message(diseaseService.findById(patientList.get(i).getPatientDiseaseList().get(j).getDisease()).getName());
+            }
+        }
+        return patientList;
     }
     @Override
     public Patient findById(Long id) {
-        return patientRepo.findById(id).get();
+        Patient patient = patientRepo.findById(id).get();
+        for (int j = 0; j < patient.getPatientDiseaseList().size(); j++) {
+            patient.getPatientDiseaseList().get(j).setDisease_message(diseaseService.findById(patient.getPatientDiseaseList().get(j).getDisease()).getName());
+        }
+        return patient;
     }
 
-
     @Override
-
     public Patient getById(Long id) {
 
         return patientRepo.findById(id).get();

@@ -3,6 +3,7 @@ package com.example.med_cards.service;
 import com.example.med_cards.model.PatientDisease;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PatientDiseaseService {
     void save(PatientDisease patientDisease);

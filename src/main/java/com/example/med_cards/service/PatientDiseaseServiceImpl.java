@@ -11,6 +11,8 @@ import java.util.List;
 public class PatientDiseaseServiceImpl implements PatientDiseaseService{
     @Autowired
     PatientDiseaseRepo patientDiseaseRepo;
+    @Autowired
+    private DiseaseService diseaseService;
 
     @Override
     public void save(PatientDisease patientDisease) {
@@ -18,8 +20,11 @@ public class PatientDiseaseServiceImpl implements PatientDiseaseService{
     }
     @Override
     public List<PatientDisease> findAll() {
-
-        return patientDiseaseRepo.findAll();
+        List < PatientDisease > patientDiseaseList = patientDiseaseRepo.findAll();
+        for (int i = 0; i<patientDiseaseList.size();i++){
+            patientDiseaseList.get(i).setDisease_message(diseaseService.findById(patientDiseaseList.get(i).getDisease()).getName());
+        }
+        return patientDiseaseList;
     }
 
 

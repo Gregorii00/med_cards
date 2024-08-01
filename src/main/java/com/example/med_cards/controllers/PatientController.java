@@ -44,11 +44,7 @@ public class PatientController {
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
         List < Patient > patientList = patientService.findPatientList();
         if (!patientList.isEmpty()) {
-            for (int i = 0; i < patientList.size(); i++) {
-                for (int j = 0; j < patientList.get(i).getPatientDiseaseList().size(); j++) {
-                    patientList.get(i).getPatientDiseaseList().get(j).setDisease_message(diseaseService.findById(patientList.get(i).getPatientDiseaseList().get(j).getDisease()).getName());
-                }
-            }
+
             respPatient.put("status", 1);
             respPatient.put("data", patientList);
             return new ResponseEntity < > (respPatient, HttpStatus.OK);
@@ -87,9 +83,6 @@ public class PatientController {
         Patient patient = patientService.getById(patient_id);
 
         if (patient != null) {
-            for (int j = 0; j < patient.getPatientDiseaseList().size(); j++) {
-                patient.getPatientDiseaseList().get(j).setDisease_message(diseaseService.findById(patient.getPatientDiseaseList().get(j).getDisease()).getName());
-            }
 
             respPatient.put("status", 1);
 
