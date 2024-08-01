@@ -4,7 +4,6 @@ import com.example.med_cards.model.PatientDisease;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,14 +19,8 @@ public class PatientDiseaseServiceImpl implements PatientDiseaseService{
     }
     @Override
     public List<PatientDisease> findAll() {
-        List < PatientDisease > patientDiseaseList = patientDiseaseRepo.findAll();
-        for (int i = 0; i<patientDiseaseList.size();i++){
-            patientDiseaseList.get(i).setDisease_message(diseaseService.findById(patientDiseaseList.get(i).getDisease()).getName());
-        }
-        return patientDiseaseList;
+        return patientDiseaseRepo.findAll();
     }
-
-
     @Override
 
     public void deleteById(Long id) {

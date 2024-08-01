@@ -22,7 +22,7 @@ public class PatientDisease {
     @JsonIgnoreProperties("patientDiseaseList")
     private Patient patient;
     private String disease;
-    private String disease_message;
+    private String name;
 
 
 }

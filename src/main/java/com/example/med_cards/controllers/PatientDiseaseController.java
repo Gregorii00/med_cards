@@ -5,6 +5,7 @@ import com.example.med_cards.model.PatientDisease;
 import com.example.med_cards.service.DiseaseService;
 import com.example.med_cards.service.PatientDiseaseService;
 import com.example.med_cards.service.PatientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+@Tag(description = "Методы работы с записями болезней пациентов",
+        name = "Patient Disease")
 @RestController
 @RequestMapping("/patient")
 public class PatientDiseaseController {

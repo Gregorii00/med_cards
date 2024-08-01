@@ -4,6 +4,7 @@ import com.example.med_cards.model.Patient;
 import com.example.med_cards.service.DiseaseService;
 import com.example.med_cards.service.PatientDiseaseService;
 import com.example.med_cards.service.PatientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+@Tag(description = "Методы работы с пациентами",
+        name = "Patient")
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
@@ -39,7 +42,7 @@ public class PatientController {
         return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
 
     }
-    @GetMapping("/find-all")
+    @GetMapping("/")
     public ResponseEntity < ? > getPatient() {
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
         List < Patient > patientList = patientService.findPatientList();
