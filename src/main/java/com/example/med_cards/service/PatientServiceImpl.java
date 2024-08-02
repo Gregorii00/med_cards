@@ -55,7 +55,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public int updatePatient(String surname, String name, String patronymic, String gender, String birthday, Long police_oms, Date hireDate, UUID id){
+    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, Date hireDate, UUID id){
         return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, hireDate, id);
     }
 

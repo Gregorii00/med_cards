@@ -35,6 +35,10 @@ public class PatientController {
 
         Map< String, Object > respPatient = new LinkedHashMap< String, Object >();
 
+        for (int i = 0; i< patients.size(); i++) {
+            Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+            patients.get(i).setHireDate(date);
+        }
         patientService.saveAll(patients);
 
         respPatient.put("status", 1);
@@ -65,18 +69,17 @@ public class PatientController {
     public ResponseEntity < ? > save(@RequestBody Patient patient) {
 
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
-
-        patient.setHireDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-
-
-        patientService.save(patient);
-
-        respPatient.put("status", 1);
-
-        respPatient.put("message", "Record is Saved Successfully!");
-
-        return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
-
+        Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        patient.setHireDate(date);
+        if (patient.getBirthday().after(date)){
+            return new ResponseEntity<>("Birthday date in the future", HttpStatus.NOT_FOUND);
+        }
+        else {
+            patientService.save(patient);
+            respPatient.put("status", 1);
+            respPatient.put("message", "Record is Saved Successfully!");
+            return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
+        }
     }
 
 //    @GetMapping("/{patient_id}")
@@ -129,28 +132,32 @@ public class PatientController {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
         Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        if (patient.getBirthday().after(date)){
+            return new ResponseEntity<>("Birthday date in the future", HttpStatus.NOT_FOUND);
+        }
+        else {
+            int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
+                    patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), date, patient_id);
 
-        int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
-                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), date, patient_id);
+            if (record!=0) {
 
-        if (record!=0) {
+                respPatient.put("status", 1);
 
-            respPatient.put("status", 1);
+                respPatient.put("data", record+" record is updated.");
 
-            respPatient.put("data", record+" record is updated.");
+                return new ResponseEntity<>(respPatient, HttpStatus.OK);
 
-            return new ResponseEntity<>(respPatient, HttpStatus.OK);
+            } else {
 
-        } else {
+                respPatient.clear();
 
-            respPatient.clear();
+                respPatient.put("status", 0);
 
-            respPatient.put("status", 0);
+                respPatient.put("message", "Data is not found");
 
-            respPatient.put("message", "Data is not found");
+                return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
-
+            }
         }
 
     }

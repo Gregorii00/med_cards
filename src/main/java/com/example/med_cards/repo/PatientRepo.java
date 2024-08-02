@@ -21,5 +21,5 @@ public interface PatientRepo extends JpaRepository<Patient, UUID> {
 
     @Query("update Patient set surname=?1, name=?2, patronymic=?3, gender=?4, birthday=?5, police_oms=?6, hireDate=?7 where id=?8")
 
-    int updatePatient(String surname, String name, String patronymic, String gender, String birthday, Long police_oms, Date hireDate, UUID id);
+    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, Date hireDate, UUID id);
 }

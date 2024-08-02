@@ -11,7 +11,7 @@ public interface PatientService {
     void save(Patient patient);
     void deleteById(UUID id);
     Patient getById(UUID id);
-    int updatePatient(String surname, String name, String patronymic, String gender, String birthday, Long police_oms, Date hireDate, UUID id);
+    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, Date hireDate, UUID id);
     List <Patient> findPatientList();
     Patient findById(UUID id);
 }

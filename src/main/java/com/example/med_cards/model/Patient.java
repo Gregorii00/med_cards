@@ -19,7 +19,7 @@ public class Patient {
     private String name;
     private String patronymic;
     private String gender;
-    private String birthday;
+    private Date birthday;
     private Long police_oms;
     private Date hireDate;
 
