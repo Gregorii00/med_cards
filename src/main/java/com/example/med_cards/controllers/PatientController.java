@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Tag(description = "Методы работы с пациентами",
         name = "Patient")
@@ -66,7 +66,7 @@ public class PatientController {
 
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
 
-        patient.setHireDate(String.valueOf(LocalDate.now()));
+        patient.setHireDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
 
         patientService.save(patient);
@@ -128,7 +128,7 @@ public class PatientController {
     public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable UUID patient_id) {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
-        String date = String.valueOf(LocalDate.now());
+        Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
         int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
                 patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), date, patient_id);

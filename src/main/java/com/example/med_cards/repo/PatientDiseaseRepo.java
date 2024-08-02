@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public interface PatientDiseaseRepo extends JpaRepository<PatientDisease , UUID>
 
     @Query("update PatientDisease set start_date=?1, end_date=?2, prescription=?3, disease=?4 where id=?5")
 
-    int updatePatientDisease(String start_date, String end_date, String prescription, String disease, UUID id);
+    int updatePatientDisease(Date start_date, Date end_date, String prescription, String disease, UUID id);
 
     @Query(value = "SELECT migrations.patient_disease.id, migrations.patient_disease.patient_id, " +
             "migrations.patient_disease.prescription, migrations.patient_disease.disease, " +

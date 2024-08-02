@@ -6,14 +6,6 @@ CREATE TABLE IF NOT EXISTS migrations.patient (
     gender VARCHAR(255) NOT NULL,
     birthday VARCHAR(255) NOT NULL,
     police_oms BIGINT NOT NULL,
-    hireDate VARCHAR(255) NOT NULL,
+    hireDate date NOT NULL,
     PRIMARY KEY (id)
 );
---Go
-
---CREATE FUNCTION save()
---AS $$
---   BEGIN
---    INSERT into migrations.patient (patient);
---  END;
---$$ LANGUAGE plpgsql;

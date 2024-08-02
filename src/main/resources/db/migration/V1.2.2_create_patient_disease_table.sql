@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS migrations.patient_disease (
     id UUID,
-    start_date VARCHAR(255) NOT NULL,
-    end_date VARCHAR(255) NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
     prescription VARCHAR(1024),
     disease VARCHAR(255) NOT NULL,
     patient_id UUID

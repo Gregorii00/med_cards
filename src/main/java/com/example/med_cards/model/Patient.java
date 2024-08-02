@@ -3,6 +3,8 @@ package com.example.med_cards.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ public class Patient {
     private String gender;
     private String birthday;
     private Long police_oms;
-    private String hireDate;
+    private Date hireDate;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("patient")

@@ -4,6 +4,8 @@ import com.example.med_cards.model.PatientDisease;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +40,7 @@ public class PatientDiseaseServiceImpl implements PatientDiseaseService{
     }
 
     @Override
-    public int updatePatientDisease(String start_date, String end_date, String prescription, String disease, UUID id){
+    public int updatePatientDisease(Date start_date, Date end_date, String prescription, String disease, UUID id){
         return patientDiseaseRepo.updatePatientDisease(start_date, end_date, prescription, disease, id);
     }
 }
