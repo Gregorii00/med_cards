@@ -6,7 +6,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.example.med_cards.model.Disease;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
