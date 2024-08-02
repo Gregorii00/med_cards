@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 @Tag(description = "Методы работы с записями болезней пациентов",
         name = "Patient Disease")
 @RestController
@@ -28,7 +30,7 @@ public class PatientDiseaseController {
     private DiseaseService diseaseService;
 
     @PostMapping("/{patient_id}/disease")
-    public ResponseEntity < ? > save(@PathVariable("patient_id") Long id, @RequestBody PatientDisease patientDisease) {
+    public ResponseEntity < ? > save(@PathVariable("patient_id") UUID id, @RequestBody PatientDisease patientDisease) {
         Map < String, Object > respPatientDisease = new LinkedHashMap < String, Object > ();
         Patient patient = patientService.findById(id);
         patientDisease.setPatient(patient);
@@ -55,7 +57,7 @@ public class PatientDiseaseController {
 
     @DeleteMapping("/{patient_id}/disease/{id}")
 
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable UUID id) {
 
         Map<String, Object> respPatientDisease = new LinkedHashMap<String, Object>();
 
@@ -70,7 +72,7 @@ public class PatientDiseaseController {
     }
 
     @PutMapping("/{patient_id}/disease/{id}")
-    public ResponseEntity<?> updatePatientDisease(@RequestBody PatientDisease patientDisease, @PathVariable Long id) {
+    public ResponseEntity<?> updatePatientDisease(@RequestBody PatientDisease patientDisease, @PathVariable UUID id) {
 
         Map<String, Object> respPatientDisease = new LinkedHashMap<String, Object>();
 

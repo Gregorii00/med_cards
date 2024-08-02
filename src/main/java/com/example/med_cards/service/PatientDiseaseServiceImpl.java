@@ -5,6 +5,7 @@ import com.example.med_cards.repo.PatientDiseaseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PatientDiseaseServiceImpl implements PatientDiseaseService{
@@ -23,21 +24,21 @@ public class PatientDiseaseServiceImpl implements PatientDiseaseService{
     }
     @Override
 
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
 
         patientDiseaseRepo.deleteById(id);
 
     }
     @Override
 
-    public int deleteByPatientId(Long patientId) {
+    public int deleteByPatientId(UUID patientId) {
 
         return patientDiseaseRepo.deleteByPatientId(patientId);
 
     }
 
     @Override
-    public int updatePatientDisease(String start_date, String end_date, String prescription, String disease, Long id){
+    public int updatePatientDisease(String start_date, String end_date, String prescription, String disease, UUID id){
         return patientDiseaseRepo.updatePatientDisease(start_date, end_date, prescription, disease, id);
     }
 }

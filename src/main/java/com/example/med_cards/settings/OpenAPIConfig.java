@@ -1,4 +1,4 @@
-package com.example.med_cards.swagger.config;
+package com.example.med_cards.settings;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

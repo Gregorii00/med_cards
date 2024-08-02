@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 @Tag(description = "Методы работы с пациентами",
         name = "Patient")
 @RestController
@@ -77,38 +79,38 @@ public class PatientController {
 
     }
 
-    @GetMapping("/{patient_id}")
-
-    public ResponseEntity < ? > getById(@PathVariable Long patient_id) {
-
-        Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
-
-        Patient patient = patientService.getById(patient_id);
-
-        if (patient != null) {
-
-            respPatient.put("status", 1);
-
-            respPatient.put("data", patient);
-
-            return new ResponseEntity < > (respPatient, HttpStatus.OK);
-
-        } else {
-
-            respPatient.clear();
-
-            respPatient.put("status", 0);
-
-            respPatient.put("message", "Data is not found");
-
-            return new ResponseEntity < > (respPatient, HttpStatus.NOT_FOUND);
-
-        }
-
-    }
+//    @GetMapping("/{patient_id}")
+//
+//    public ResponseEntity < ? > getById(@PathVariable Long patient_id) {
+//
+//        Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
+//
+//        Patient patient = patientService.getById(patient_id);
+//
+//        if (patient != null) {
+//
+//            respPatient.put("status", 1);
+//
+//            respPatient.put("data", patient);
+//
+//            return new ResponseEntity < > (respPatient, HttpStatus.OK);
+//
+//        } else {
+//
+//            respPatient.clear();
+//
+//            respPatient.put("status", 0);
+//
+//            respPatient.put("message", "Data is not found");
+//
+//            return new ResponseEntity < > (respPatient, HttpStatus.NOT_FOUND);
+//
+//        }
+//
+//    }
     @DeleteMapping("/{patient_id}")
 
-    public ResponseEntity<?> deleteById(@PathVariable Long patient_id) {
+    public ResponseEntity<?> deleteById(@PathVariable UUID patient_id) {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
 
@@ -123,7 +125,7 @@ public class PatientController {
     }
 
     @PutMapping("/{patient_id}")
-    public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable Long patient_id) {
+    public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable UUID patient_id) {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
         String date = String.valueOf(LocalDate.now());

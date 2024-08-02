@@ -1,15 +1,13 @@
 package com.example.med_cards.controllers;
 
 import com.example.med_cards.model.Disease;
-import com.example.med_cards.scan.CsvUtility;
 import com.example.med_cards.service.DiseaseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,23 +18,18 @@ import java.util.Map;
 public class DiseaseController {
     @Autowired
     DiseaseService diseaseService;
-    // Обновлять каждый день fixedRate = 24 * 60 * 60 * 1000
-//    @Scheduled(fixedRate = 30 * 60 * 1000)
+    @Scheduled(cron = "0 0 0 * * *")
     @PostMapping("/csv/upload")
-    public ResponseEntity< ? > uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity< ? > uploadFile() {
         String message = "";
-        if (CsvUtility.hasCsvFormat(file)) {
-            try {
-                diseaseService.save(file);
-                message = "The file is uploaded successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(message);
-            } catch (Exception e) {
-                message = "The file is not upload successfully: " + file.getOriginalFilename() + "!" + e;
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
-            }
+        try {
+            diseaseService.save();
+            message = "The file is uploaded successfully: ";
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        } catch (Exception e) {
+            message = "The file is not upload successfully: !" + e;
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
         }
-        message = "Please upload an csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     @GetMapping("/mkb10")

@@ -1,9 +1,9 @@
 package com.example.med_cards.scan;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +21,21 @@ public class CsvUtility {
         }
         return true;
     }
-    public static List<Disease> csvToDiseaseList(InputStream is) {
-
-        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-             CSVParser csvParser = new CSVParser(bReader,
-                     CSVFormat.DEFAULT.withTrim());) {
-            List<Disease> diseaseList = new ArrayList<Disease>();
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-            for (CSVRecord csvRecord : csvRecords) {
+    public static List<Disease> csvToDiseaseList() throws MalformedURLException {
+        URL url = new URL("https://github.com/ak4nv/mkb10/raw/master/mkb10.csv");
+        CSVFormat csvFormat = CSVFormat.DEFAULT.withTrim();
+        List<Disease> diseaseList = new ArrayList<Disease>();
+        try(CSVParser csvParser = CSVParser.parse(url, StandardCharsets.UTF_8, csvFormat)) {
+            for(CSVRecord csvRecord : csvParser) {
                 Disease disease = new Disease();
                 disease.setId((csvRecord.get(2)));
                 disease.setName(csvRecord.get(3));
                 diseaseList.add(disease);
             }
-            return diseaseList;
         } catch (IOException e) {
-            throw new RuntimeException("CSV data is failed to parse: " + e.getMessage());
+            e.printStackTrace();
         }
+        return diseaseList;
     }
+
 }

@@ -4,9 +4,9 @@ import com.example.med_cards.model.Disease;
 import com.example.med_cards.repo.DiseaseRepo;
 import com.example.med_cards.scan.CsvUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -14,11 +14,11 @@ import java.util.List;
 public class DiseaseServiceImpl implements DiseaseService{
     @Autowired
     DiseaseRepo diseaseRepo;
-    @Override
-    public void save(MultipartFile file) {
 
+    @Override
+    public void save() {
         try {
-            List<Disease> diseaseList = CsvUtility.csvToDiseaseList(file.getInputStream());
+            List<Disease> diseaseList = CsvUtility.csvToDiseaseList();
             diseaseRepo.saveAll(diseaseList);
         } catch (IOException ex) {
             throw new RuntimeException("Data is not store successfully: " + ex.getMessage());
