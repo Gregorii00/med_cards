@@ -86,12 +86,26 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.jsoup</groupId>-->
+<!--			<artifactId>jsoup</artifactId>-->
+<!--			<version>1.18.1</version>-->
+<!--		</dependency>-->
+<!--		Валидация-->
 		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.18.1</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-docker-compose</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 
 	</dependencies>
 
@@ -107,6 +121,9 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+<!--					<image>-->
+<!--						<name>docker.io/med-cards/${project.artifactId}:v1</name>-->
+<!--					</image>-->
 				</configuration>
 			</plugin>
 		</plugins>

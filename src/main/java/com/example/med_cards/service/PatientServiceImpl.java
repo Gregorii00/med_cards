@@ -21,11 +21,6 @@ public class PatientServiceImpl implements PatientService{
 
 
     @Override
-    public void saveAll(List< Patient > patientList) {
-        patientRepo.saveAll(patientList);
-    }
-
-    @Override
     public void save(Patient patient) {
         patientRepo.save(patient);
     }
@@ -39,7 +34,7 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public Patient findById(UUID id) {
         Patient patient = patientRepo.findById(id).get();
-        patientDiseaseRepo.findDiseaseID(id);
+//        patientDiseaseRepo.findDiseaseID(id);
         return patient;
     }
 
@@ -55,8 +50,8 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, Date hireDate, UUID id){
-        return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, hireDate, id);
+    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, UUID id){
+        return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, id);
     }
 
 

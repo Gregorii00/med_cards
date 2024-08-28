@@ -5,15 +5,12 @@ import com.example.med_cards.service.DiseaseService;
 import com.example.med_cards.service.PatientDiseaseService;
 import com.example.med_cards.service.PatientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 @Tag(description = "Методы работы с пациентами",
@@ -28,26 +25,6 @@ public class PatientController {
     private PatientDiseaseService patientDiseaseService;
     @Autowired
     private DiseaseService diseaseService;
-
-    @PostMapping("/save-all")
-
-    public ResponseEntity< ? > save(@RequestBody List< Patient > patients) {
-
-        Map< String, Object > respPatient = new LinkedHashMap< String, Object >();
-
-        for (int i = 0; i< patients.size(); i++) {
-            Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-            patients.get(i).setHireDate(date);
-        }
-        patientService.saveAll(patients);
-
-        respPatient.put("status", 1);
-
-        respPatient.put("message", "Record is Saved Successfully!");
-
-        return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
-
-    }
     @GetMapping("/")
     public ResponseEntity < ? > getPatient() {
         Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
@@ -66,51 +43,13 @@ public class PatientController {
     }
     @PostMapping("/")
 
-    public ResponseEntity < ? > save(@RequestBody Patient patient) {
-
-        Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
-        Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        patient.setHireDate(date);
-        if (patient.getBirthday().after(date)){
-            return new ResponseEntity<>("Birthday date in the future", HttpStatus.NOT_FOUND);
-        }
-        else {
-            patientService.save(patient);
-            respPatient.put("status", 1);
-            respPatient.put("message", "Record is Saved Successfully!");
-            return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
-        }
+    public ResponseEntity < ? > save(@Valid @RequestBody Patient patient) {
+        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
+        patientService.save(patient);
+        respPatient.put("status", 1);
+        respPatient.put("message", "Record is Saved Successfully!");
+        return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
     }
-
-//    @GetMapping("/{patient_id}")
-//
-//    public ResponseEntity < ? > getById(@PathVariable Long patient_id) {
-//
-//        Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
-//
-//        Patient patient = patientService.getById(patient_id);
-//
-//        if (patient != null) {
-//
-//            respPatient.put("status", 1);
-//
-//            respPatient.put("data", patient);
-//
-//            return new ResponseEntity < > (respPatient, HttpStatus.OK);
-//
-//        } else {
-//
-//            respPatient.clear();
-//
-//            respPatient.put("status", 0);
-//
-//            respPatient.put("message", "Data is not found");
-//
-//            return new ResponseEntity < > (respPatient, HttpStatus.NOT_FOUND);
-//
-//        }
-//
-//    }
     @DeleteMapping("/{patient_id}")
 
     public ResponseEntity<?> deleteById(@PathVariable UUID patient_id) {
@@ -128,36 +67,30 @@ public class PatientController {
     }
 
     @PutMapping("/{patient_id}")
-    public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable UUID patient_id) {
+    public ResponseEntity<?> updatePatient(@Valid @RequestBody Patient patient, @PathVariable UUID patient_id) {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
-        Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        if (patient.getBirthday().after(date)){
-            return new ResponseEntity<>("Birthday date in the future", HttpStatus.NOT_FOUND);
-        }
-        else {
-            int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
-                    patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), date, patient_id);
+        int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
+                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), patient_id);
 
-            if (record!=0) {
+        if (record!=0) {
 
-                respPatient.put("status", 1);
+            respPatient.put("status", 1);
 
-                respPatient.put("data", record+" record is updated.");
+            respPatient.put("data", record+" record is updated.");
 
-                return new ResponseEntity<>(respPatient, HttpStatus.OK);
+            return new ResponseEntity<>(respPatient, HttpStatus.OK);
 
-            } else {
+        } else {
 
-                respPatient.clear();
+            respPatient.clear();
 
-                respPatient.put("status", 0);
+            respPatient.put("status", 0);
 
-                respPatient.put("message", "Data is not found");
+            respPatient.put("message", "Data is not found");
 
-                return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
 
-            }
         }
 
     }

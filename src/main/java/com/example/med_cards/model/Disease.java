@@ -1,15 +1,23 @@
 package com.example.med_cards.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.List;
+
 @Entity
-@Table(name = "disease")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Disease {
     @Id
     private String id;
     @Column(length=1000)
     private String name;
+    @OneToMany(mappedBy = "disease")
+    @JsonIgnoreProperties("disease")
+    private List < PatientDisease > patientDiseaseList;
 }

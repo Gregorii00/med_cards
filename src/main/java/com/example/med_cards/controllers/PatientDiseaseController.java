@@ -6,15 +6,12 @@ import com.example.med_cards.service.DiseaseService;
 import com.example.med_cards.service.PatientDiseaseService;
 import com.example.med_cards.service.PatientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 @Tag(description = "Методы работы с записями болезней пациентов",
@@ -31,25 +28,14 @@ public class PatientDiseaseController {
     private DiseaseService diseaseService;
 
     @PostMapping("/{patient_id}/disease")
-    public ResponseEntity < ? > save(@PathVariable("patient_id") UUID id, @RequestBody PatientDisease patientDisease) {
+    public ResponseEntity < ? > save(@PathVariable("patient_id") UUID id, @Valid @RequestBody PatientDisease patientDisease) {
         Map < String, Object > respPatientDisease = new LinkedHashMap < String, Object > ();
         Patient patient = patientService.findById(id);
-        Date dateNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-
-        if (patientDisease.getStart_date().after(dateNow)){
-
-            return new ResponseEntity<>("Start date in the future", HttpStatus.NOT_FOUND);
-
-        } else if (patientDisease.getEnd_date().after(dateNow)) {
-            return new ResponseEntity<>("End date in the future", HttpStatus.NOT_FOUND);
-        }
-        else{
-            patientDisease.setPatient(patient);
-            patientDiseaseService.save(patientDisease);
-            respPatientDisease.put("status", 1);
-            respPatientDisease.put("message", "Record is Saved Successfully!");
-            return new ResponseEntity < > (respPatientDisease, HttpStatus.CREATED);
-        }
+        patientDisease.setPatient(patient);
+        patientDiseaseService.save(patientDisease);
+        respPatientDisease.put("status", 1);
+        respPatientDisease.put("message", "Record is Saved Successfully!");
+        return new ResponseEntity < > (respPatientDisease, HttpStatus.CREATED);
 
     }
     @GetMapping("/{patient_id}/disease")
@@ -85,40 +71,27 @@ public class PatientDiseaseController {
     }
 
     @PutMapping("/{patient_id}/disease/{id}")
-    public ResponseEntity<?> updatePatientDisease(@RequestBody PatientDisease patientDisease, @PathVariable UUID id) {
-
+    public ResponseEntity<?> updatePatientDisease(@Valid @RequestBody PatientDisease patientDisease, @PathVariable UUID id) {
         Map<String, Object> respPatientDisease = new LinkedHashMap<String, Object>();
-        Date dateNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        if (patientDisease.getStart_date().after(dateNow)){
+        int record=patientDiseaseService.updatePatientDisease(patientDisease, id);
+        if (record!=0) {
 
-            return new ResponseEntity<>("Start date in the future", HttpStatus.NOT_FOUND);
+            respPatientDisease.put("status", 1);
 
-        } else if (patientDisease.getEnd_date().after(dateNow)) {
-            return new ResponseEntity<>("End date in the future", HttpStatus.NOT_FOUND);
-        }
-        else{
-            int record=patientDiseaseService.updatePatientDisease(patientDisease.getStart_date(), patientDisease.getEnd_date(), patientDisease.getPrescription(),
-                    patientDisease.getDisease(), id);
+            respPatientDisease.put("data", record+" record is updated.");
 
-            if (record!=0) {
+            return new ResponseEntity<>(respPatientDisease, HttpStatus.OK);
 
-                respPatientDisease.put("status", 1);
+        } else {
 
-                respPatientDisease.put("data", record+" record is updated.");
+            respPatientDisease.clear();
 
-                return new ResponseEntity<>(respPatientDisease, HttpStatus.OK);
+            respPatientDisease.put("status", 0);
 
-            } else {
+            respPatientDisease.put("message", "Data is not found");
 
-                respPatientDisease.clear();
+            return new ResponseEntity<>(respPatientDisease, HttpStatus.NOT_FOUND);
 
-                respPatientDisease.put("status", 0);
-
-                respPatientDisease.put("message", "Data is not found");
-
-                return new ResponseEntity<>(respPatientDisease, HttpStatus.NOT_FOUND);
-
-            }
         }
 
 

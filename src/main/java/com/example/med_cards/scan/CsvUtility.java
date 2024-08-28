@@ -13,7 +13,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
 public class CsvUtility {
     public static String TYPE = "text/csv";
-    public long count=0;
     public static boolean hasCsvFormat(MultipartFile file) {
         if (!TYPE.equals(file.getContentType())) {
             return false;

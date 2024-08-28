@@ -18,19 +18,6 @@ import java.util.Map;
 public class DiseaseController {
     @Autowired
     DiseaseService diseaseService;
-    @Scheduled(cron = "0 0 0 * * *")
-    @PostMapping("/csv/upload")
-    public ResponseEntity< ? > uploadFile() {
-        String message = "";
-        try {
-            diseaseService.save();
-            message = "The file is uploaded successfully: ";
-            return ResponseEntity.status(HttpStatus.OK).body(message);
-        } catch (Exception e) {
-            message = "The file is not upload successfully: !" + e;
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
-        }
-    }
 
     @GetMapping("/mkb10")
     public ResponseEntity < ? > getMkb10() {

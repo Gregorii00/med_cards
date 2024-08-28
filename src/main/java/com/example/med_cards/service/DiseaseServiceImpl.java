@@ -4,8 +4,7 @@ import com.example.med_cards.model.Disease;
 import com.example.med_cards.repo.DiseaseRepo;
 import com.example.med_cards.scan.CsvUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
@@ -24,8 +23,8 @@ public class DiseaseServiceImpl implements DiseaseService{
             throw new RuntimeException("Data is not store successfully: " + ex.getMessage());
         }
     }
-
     @Override
+    @Cacheable("diseases")
     public List < Disease > findAll() {
         return diseaseRepo.findAll();
     }

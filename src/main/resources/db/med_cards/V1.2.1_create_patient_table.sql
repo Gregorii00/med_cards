@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS migrations.patient (
+CREATE TABLE IF NOT EXISTS med_cards.patient (
     id UUID,
     surname VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS migrations.patient (
     gender VARCHAR(255) NOT NULL,
     birthday date NOT NULL,
     police_oms BIGINT NOT NULL,
-    hireDate date NOT NULL,
+    hireDate datetime2 NOT NULL,
     PRIMARY KEY (id)
 );
