@@ -2,15 +2,17 @@ package com.example.med_cards.service;
 
 import com.example.med_cards.model.Patient;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PatientService {
     void save(Patient patient);
     void deleteById(UUID id);
     Patient getById(UUID id);
-    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, UUID id);
+    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, LocalDateTime hireDate, UUID id);
     List <Patient> findPatientList();
-    Patient findById(UUID id);
+    Optional<Patient> findById(UUID id);
 }

@@ -1,14 +1,14 @@
 package com.example.med_cards.service;
 
+import com.example.med_cards.exception.RecordNotFoundException;
 import com.example.med_cards.model.Patient;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import com.example.med_cards.repo.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class PatientServiceImpl implements PatientService{
@@ -32,10 +32,10 @@ public class PatientServiceImpl implements PatientService{
         return patientList;
     }
     @Override
-    public Patient findById(UUID id) {
-        Patient patient = patientRepo.findById(id).get();
+    public Optional<Patient> findById(UUID id) {
+        Optional<Patient> patient = Optional.of(patientRepo.findById(id).get());
 //        patientDiseaseRepo.findDiseaseID(id);
-        return patient;
+        return Optional.ofNullable(patient.orElseThrow(() -> new RecordNotFoundException("Employee id '" + id + "' does no exist")));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, UUID id){
-        return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, id);
+    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, LocalDateTime hireDate, UUID id){
+        return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, hireDate, id);
     }
 
 

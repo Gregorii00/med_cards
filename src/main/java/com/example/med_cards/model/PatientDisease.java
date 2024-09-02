@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -41,4 +42,6 @@ public class PatientDisease {
     private Disease disease;
 
 
+    public void setPatient(Optional<Patient> patient) {
+    }
 }

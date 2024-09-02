@@ -4,6 +4,8 @@ import com.example.med_cards.model.PatientDisease;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

@@ -71,7 +71,7 @@ public class PatientController {
 
         Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
         int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
-                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), patient_id);
+                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), patient.getHireDate(), patient_id);
 
         if (record!=0) {
 

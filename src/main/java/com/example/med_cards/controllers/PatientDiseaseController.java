@@ -30,7 +30,7 @@ public class PatientDiseaseController {
     @PostMapping("/{patient_id}/disease")
     public ResponseEntity < ? > save(@PathVariable("patient_id") UUID id, @Valid @RequestBody PatientDisease patientDisease) {
         Map < String, Object > respPatientDisease = new LinkedHashMap < String, Object > ();
-        Patient patient = patientService.findById(id);
+        Optional<Patient> patient = patientService.findById(id);
         patientDisease.setPatient(patient);
         patientDiseaseService.save(patientDisease);
         respPatientDisease.put("status", 1);
