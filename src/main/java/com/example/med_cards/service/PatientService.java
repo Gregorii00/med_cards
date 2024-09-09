@@ -1,18 +1,18 @@
 package com.example.med_cards.service;
 
+import com.example.med_cards.exception.PatientNotFoundException;
 import com.example.med_cards.model.Patient;
+import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.UUID;
 
 public interface PatientService {
-    void save(Patient patient);
-    void deleteById(UUID id);
-    Patient getById(UUID id);
-    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, LocalDateTime hireDate, UUID id);
+    Patient save(Patient patient);
+    Map<String, Object> deleteById(UUID id);
+//    Patient getById(UUID id) throws PatientNotFoundException;
+    ResponseEntity updatePatient(Patient patient, UUID id);
     List <Patient> findPatientList();
-    Optional<Patient> findById(UUID id);
+    Patient findById(UUID id);
 }

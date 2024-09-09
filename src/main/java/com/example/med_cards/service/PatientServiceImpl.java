@@ -1,10 +1,12 @@
 package com.example.med_cards.service;
 
-import com.example.med_cards.exception.RecordNotFoundException;
+import com.example.med_cards.exception.PatientNotFoundException;
 import com.example.med_cards.model.Patient;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import com.example.med_cards.repo.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,38 +23,40 @@ public class PatientServiceImpl implements PatientService{
 
 
     @Override
-    public void save(Patient patient) {
-        patientRepo.save(patient);
+    public Patient save(Patient patient) {
+        Patient patient1 = new Patient(patient);
+        return patientRepo.save(patient1);
     }
 
     @Override
     public List < Patient > findPatientList() {
-        List <Patient> patientList = patientRepo.findAll();
-        patientDiseaseRepo.findAll();
-        return patientList;
+        return patientRepo.findAll();
     }
     @Override
-    public Optional<Patient> findById(UUID id) {
-        Optional<Patient> patient = Optional.of(patientRepo.findById(id).get());
-//        patientDiseaseRepo.findDiseaseID(id);
-        return Optional.ofNullable(patient.orElseThrow(() -> new RecordNotFoundException("Employee id '" + id + "' does no exist")));
-    }
-
-    @Override
-    public Patient getById(UUID id) {
-
-        return patientRepo.findById(id).get();
-
+    public Patient findById(UUID id) {
+        Patient patient = patientRepo.findById(id).get();
+        return patient;
     }
     @Override
-    public void deleteById(UUID id) {
+    public Map<String, Object> deleteById(UUID id) {
+        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
         patientRepo.deleteById(id);
+        respPatient.put("status", 1);
+        respPatient.put("data", "Record is deleted successfully!");
+        return respPatient;
     }
 
     @Override
-    public int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, LocalDateTime hireDate, UUID id){
-        return patientRepo.updatePatient(surname, name, patronymic, gender, birthday, police_oms, hireDate, id);
+    public ResponseEntity updatePatient(Patient patient, UUID patient_id){
+        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
+        int record  = patientRepo.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
+                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), LocalDateTime.now(), patient_id);
+        respPatient.put("status", record);
+        respPatient.put("data", record+" record is updated.");
+        if (record!=0) {
+            return new ResponseEntity<>(respPatient, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
+        }
     }
-
-
 }

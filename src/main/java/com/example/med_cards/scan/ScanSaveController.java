@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScanSaveController {
     @Autowired
     DiseaseService diseaseService;
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public ResponseEntity< ? > uploadFile() {
         String message = "";
         try {

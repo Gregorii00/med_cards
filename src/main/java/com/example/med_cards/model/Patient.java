@@ -42,6 +42,14 @@ public class Patient {
     @JsonIgnoreProperties("patient")
     private List<PatientDisease> patientDiseaseList;
 
-    public void orElseThrow(Object o) {
+    public Patient(Patient patient) {
+        this.id = patient.id;
+        this.surname = patient.surname;
+        this.name = patient.name;
+        this.patronymic = patient.patronymic;
+        this.gender = patient.gender;
+        this.birthday = patient.birthday;
+        this.police_oms = patient.police_oms;
+        this.hireDate = patient.hireDate;
     }
 }

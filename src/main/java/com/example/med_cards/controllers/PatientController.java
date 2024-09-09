@@ -25,74 +25,25 @@ public class PatientController {
     private PatientDiseaseService patientDiseaseService;
     @Autowired
     private DiseaseService diseaseService;
-    @GetMapping("/")
-    public ResponseEntity < ? > getPatient() {
-        Map < String, Object > respPatient = new LinkedHashMap < String, Object > ();
-        List < Patient > patientList = patientService.findPatientList();
-        if (!patientList.isEmpty()) {
-
-            respPatient.put("status", 1);
-            respPatient.put("data", patientList);
-            return new ResponseEntity < > (respPatient, HttpStatus.OK);
-        } else {
-            respPatient.clear();
-            respPatient.put("status", 0);
-            respPatient.put("message", "Data is not found");
-            return new ResponseEntity < > (respPatient, HttpStatus.NOT_FOUND);
-        }
-    }
     @PostMapping("/")
-
-    public ResponseEntity < ? > save(@Valid @RequestBody Patient patient) {
-        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
-        patientService.save(patient);
-        respPatient.put("status", 1);
-        respPatient.put("message", "Record is Saved Successfully!");
-        return new ResponseEntity < > (respPatient, HttpStatus.CREATED);
+    public ResponseEntity<?> save(@Valid @RequestBody Patient patient) {
+        return new ResponseEntity<>(patientService.save(patient), HttpStatus.CREATED);
+    }
+    @GetMapping("/")
+    public ResponseEntity < List < Patient > > getAllPatient() {
+        return ResponseEntity.ok(patientService.findPatientList());
+    }
+    @GetMapping("/{patient_id}")
+    public ResponseEntity <?> getPatient(@PathVariable("patient_id") UUID id) {
+        return ResponseEntity.ok(patientService.findById(id));
     }
     @DeleteMapping("/{patient_id}")
-
-    public ResponseEntity<?> deleteById(@PathVariable UUID patient_id) {
-
-        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
-
-        patientService.deleteById(patient_id);
-
-        respPatient.put("status", 1);
-
-        respPatient.put("data", "Record is deleted successfully!");
-
-        return new ResponseEntity<>(respPatient, HttpStatus.OK);
-
+    public ResponseEntity<?> deleteById(@PathVariable("patient_id") UUID id) {
+        return new ResponseEntity<>(patientService.deleteById(id), HttpStatus.OK);
     }
-
     @PutMapping("/{patient_id}")
-    public ResponseEntity<?> updatePatient(@Valid @RequestBody Patient patient, @PathVariable UUID patient_id) {
-
-        Map<String, Object> respPatient = new LinkedHashMap<String, Object>();
-        int record=patientService.updatePatient(patient.getSurname(), patient.getName(), patient.getPatronymic(),
-                patient.getGender(), patient.getBirthday(), patient.getPolice_oms(), patient.getHireDate(), patient_id);
-
-        if (record!=0) {
-
-            respPatient.put("status", 1);
-
-            respPatient.put("data", record+" record is updated.");
-
-            return new ResponseEntity<>(respPatient, HttpStatus.OK);
-
-        } else {
-
-            respPatient.clear();
-
-            respPatient.put("status", 0);
-
-            respPatient.put("message", "Data is not found");
-
-            return new ResponseEntity<>(respPatient, HttpStatus.NOT_FOUND);
-
-        }
-
+    public ResponseEntity<?> updatePatient(@Valid @RequestBody Patient patient, @PathVariable("patient_id") UUID id) {
+        ResponseEntity respPatient =patientService.updatePatient(patient, id);
+        return new ResponseEntity<>(respPatient , respPatient.getStatusCode());
     }
-
 }

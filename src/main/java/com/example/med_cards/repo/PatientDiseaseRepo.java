@@ -10,5 +10,4 @@ import java.util.UUID;
 public interface PatientDiseaseRepo extends JpaRepository<PatientDisease , UUID> {
     List<PatientDisease> findAll();
 
-
 }
