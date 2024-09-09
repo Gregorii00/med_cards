@@ -21,33 +21,6 @@ public class DiseaseController {
 
     @GetMapping("/mkb10")
     public ResponseEntity < ? > getMkb10() {
-        Map< String, Object > respDisease = new LinkedHashMap< String, Object >();
-        List< Disease > diseaseList = diseaseService.findAll();
-        if (!diseaseList.isEmpty()) {
-            respDisease.put("status", 1);
-            respDisease.put("data", diseaseList);
-            return new ResponseEntity < > (respDisease, HttpStatus.OK);
-        } else {
-            respDisease.clear();
-            respDisease.put("status", 0);
-            respDisease.put("message", "Data is not found");
-            return new ResponseEntity < > (respDisease, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/disease")
-    public ResponseEntity<?> getDisease() {
-        Map<String, Object> respDisease = new LinkedHashMap<String, Object>();
-        List<Disease> diseaseList=diseaseService.findAll();
-        if (!diseaseList.isEmpty()) {
-            respDisease.put("status", 1);
-            respDisease.put("data", diseaseList);
-            return new ResponseEntity<>(respDisease, HttpStatus.OK);
-        } else {
-            respDisease.clear();
-            respDisease.put("status", 0);
-            respDisease.put("message", "Data is not found");
-            return new ResponseEntity<>(respDisease, HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(diseaseService.findAll());
     }
 }

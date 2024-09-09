@@ -28,7 +28,7 @@ public class DiseaseServiceImpl implements DiseaseService{
     public List < Disease > findAll() {
         return diseaseRepo.findAll();
     }
-
+    @Override
     public Disease findById(String id){
         return diseaseRepo.findById(id);
     }
