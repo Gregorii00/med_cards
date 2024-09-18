@@ -1,16 +1,17 @@
 package com.example.med_cards.scan;
 
+import com.example.med_cards.model.Disease;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.med_cards.model.Disease;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.springframework.web.multipart.MultipartFile;
 public class CsvUtility {
     public static String TYPE = "text/csv";
     public static boolean hasCsvFormat(MultipartFile file) {

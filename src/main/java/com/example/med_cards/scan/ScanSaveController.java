@@ -17,11 +17,9 @@ public class ScanSaveController {
         try {
             diseaseService.save();
             message = "The file is uploaded successfully: ";
-            System.out.println(ResponseEntity.status(HttpStatus.OK).body(message));
             return ResponseEntity.status(HttpStatus.OK).body(message);
         } catch (Exception e) {
             message = "The file is not upload successfully: !" + e;
-            System.out.println(ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message));
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
         }
     }

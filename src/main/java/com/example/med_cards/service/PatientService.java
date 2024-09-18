@@ -1,6 +1,5 @@
 package com.example.med_cards.service;
 
-import com.example.med_cards.exception.PatientNotFoundException;
 import com.example.med_cards.model.Patient;
 import org.springframework.http.ResponseEntity;
 

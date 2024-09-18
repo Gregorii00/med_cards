@@ -1,16 +1,22 @@
 package com.example.med_cards.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -34,9 +40,12 @@ public class Patient {
     @Digits(fraction = 0, integer = 16, message="Number should contain 16 digits.")
     @NotNull(message = "Заполнение поля 'полис' обязательно")
     private Long police_oms;
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @CreatedDate
-    private LocalDateTime hireDate;
+    private LocalDateTime created_at;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @LastModifiedDate
+    private LocalDateTime updated_at;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("patient")
@@ -50,6 +59,7 @@ public class Patient {
         this.gender = patient.gender;
         this.birthday = patient.birthday;
         this.police_oms = patient.police_oms;
-        this.hireDate = patient.hireDate;
+        this.created_at = patient.created_at;
+        this.updated_at = patient.updated_at;
     }
 }

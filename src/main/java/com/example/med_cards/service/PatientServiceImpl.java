@@ -1,6 +1,5 @@
 package com.example.med_cards.service;
 
-import com.example.med_cards.exception.PatientNotFoundException;
 import com.example.med_cards.model.Patient;
 import com.example.med_cards.repo.PatientDiseaseRepo;
 import com.example.med_cards.repo.PatientRepo;
@@ -10,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PatientServiceImpl implements PatientService{
