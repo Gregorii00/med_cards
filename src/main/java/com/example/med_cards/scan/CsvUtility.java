@@ -20,6 +20,8 @@ public class CsvUtility {
         }
         return true;
     }
+
+    // проверка на удаление, изменение или добавление если есть изменение
     public static List<Disease> csvToDiseaseList() throws MalformedURLException {
         URL url = new URL("https://github.com/ak4nv/mkb10/raw/master/mkb10.csv");
         CSVFormat csvFormat = CSVFormat.DEFAULT.withTrim();

@@ -28,6 +28,13 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<org.mapstruct.version>1.6.2</org.mapstruct.version>
+		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+		<org.projectlombok.version>1.18.20</org.projectlombok.version>
+		<compiler-plugin.version>3.6.2</compiler-plugin.version>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -57,10 +64,32 @@
 			<version>10.18.0</version>
 		</dependency>
 		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${org.mapstruct.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>${org.projectlombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok-mapstruct-binding</artifactId>-->
+<!--			<version>${lombok-mapstruct-binding.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.modelmapper</groupId>-->
+<!--			<artifactId>modelmapper</artifactId>-->
+<!--			<version>2.3.8</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -105,7 +134,7 @@
 			<version>3.4.1</version>
 			<scope>test</scope>
 		</dependency>
-<!--		Докер-->
+		<!--		Докер-->
         <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-docker-compose</artifactId>-->
@@ -117,21 +146,31 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-<!--					<image>-->
-<!--						<name>docker.io/med-cards/${project.artifactId}:v1</name>-->
-<!--					</image>-->
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<useIncrementalCompilation>false</useIncrementalCompilation>
+					<annotationProcessorPaths>
+						<path>
+						<groupId>org.mapstruct</groupId>
+						<artifactId>mapstruct-processor</artifactId>
+						<version>${org.mapstruct.version}</version>
+						</path>
+<!--						<path>-->
+<!--							<groupId>org.projectlombok</groupId>-->
+<!--							<artifactId>lombok-mapstruct-binding</artifactId>-->
+<!--							<version>${lombok-mapstruct-binding.version}</version>-->
+<!--						</path>-->
+					</annotationProcessorPaths>
+					<!--<image>-->
+					<!--<name>docker.io/med-cards/${project.artifactId}:v1</name>-->
+					<!--</image>-->
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

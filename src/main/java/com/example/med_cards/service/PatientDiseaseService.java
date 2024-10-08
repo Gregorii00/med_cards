@@ -1,7 +1,8 @@
 package com.example.med_cards.service;
 
-import com.example.med_cards.model.PatientDisease;
-import org.springframework.http.ResponseEntity;
+import com.example.med_cards.dto.patient_disease.PatientDiseaseDto;
+import com.example.med_cards.dto.patient_disease.PatientDiseaseDtoCreate;
+import com.example.med_cards.dto.patient_disease.PatientDiseaseDtoView;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,8 @@ import java.util.UUID;
 public interface PatientDiseaseService {
     Map<String, Object> deleteById(UUID id);
 
-    PatientDisease save(PatientDisease patientDisease, UUID id);
+    List<PatientDiseaseDtoView> findAll(UUID id);
+    void updatePatientDisease(PatientDiseaseDto patientDiseaseDto, UUID id);
 
-    List<PatientDisease> findAll();
-    ResponseEntity updatePatientDisease(PatientDisease patientDisease, UUID id);
-
+    PatientDiseaseDtoView save(PatientDiseaseDtoCreate patientDiseaseDtoCreate, UUID id);
 }

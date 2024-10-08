@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS patient_disease (
     end_date TIMESTAMP NOT NULL,
     prescription VARCHAR(1024),
     patient_id UUID NOT NULL
-            references patient(id),
+        references patient(id),
     disease_id VARCHAR(255) NOT NULL
-            REFERENCES  disease(id)
+        REFERENCES  disease(id)
 );

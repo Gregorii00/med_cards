@@ -2,7 +2,6 @@ package com.example.med_cards.controllers;
 
 import com.example.med_cards.service.DiseaseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dictionary")
 public class DiseaseController {
-    @Autowired
-    DiseaseService diseaseService;
+    private final DiseaseService diseaseService;
+
+    public DiseaseController(DiseaseService diseaseService) {
+        this.diseaseService = diseaseService;
+    }
 
     @GetMapping("/mkb10")
     public ResponseEntity < ? > getMkb10() {

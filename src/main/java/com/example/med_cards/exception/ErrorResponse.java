@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+// использовать вместо class record
 public class ErrorResponse {
 
     public ErrorResponse(String message, List<String> details) {

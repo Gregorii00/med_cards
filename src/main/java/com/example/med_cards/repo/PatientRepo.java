@@ -14,12 +14,4 @@ import java.util.UUID;
 
 @RepositoryRestResource
 public interface PatientRepo extends JpaRepository<Patient, UUID> {
-    @Transactional
-
-    @Modifying
-
-    @Query("update Patient set surname=?1, name=?2, patronymic=?3, gender=?4, birthday=?5, police_oms=?6, updated_at=?7 where id=?8")
-
-    int updatePatient(String surname, String name, String patronymic, String gender, Date birthday, Long police_oms, LocalDateTime updated_at,  UUID id);
-
 }
